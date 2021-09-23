@@ -15,6 +15,14 @@ public class ClackData {
         this.type = type;
     }
 
+    public int getType() {
+        return this.type;
+    }
+
+    public String getUserName() {
+        return this.userName;
+    }
+
 
 }
 
