@@ -1,6 +1,6 @@
 import java.util.Date;
 
-public class ClackData {
+public abstract class ClackData {
     String userName;
     int type;
     Date date;
@@ -23,6 +23,10 @@ public class ClackData {
         return this.userName;
     }
 
+    public Date getDate() {
+        return this.date;
+    }
 
+    public abstract String getData();
 }
 
