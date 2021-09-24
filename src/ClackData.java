@@ -1,6 +1,9 @@
 import java.util.Date;
 
 public abstract class ClackData {
+
+    int CONSTANT_SENDMESSAGE = 2;
+
     String userName;
     int type;
     Date date;
@@ -10,9 +13,13 @@ public abstract class ClackData {
         this.type = type;
     }
 
-    public ClackData(int type){
+    public ClackData(int type) {
         this.userName = "Anon";
         this.type = type;
+    }
+
+    public ClackData() {
+        
     }
 
     public int getType() {
