@@ -19,7 +19,7 @@ public abstract class ClackData {
     }
 
     public ClackData() {
-        
+
     }
 
     public int getType() {
