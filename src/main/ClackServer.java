@@ -1,6 +1,8 @@
 package main;
 
-public classC lackServer {
+import data.ClackData;
+
+public class ClackServer {
     int port;
     boolean closeConnection;
     ClackData dataToReceiveFromClient;
