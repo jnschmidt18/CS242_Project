@@ -1,4 +1,6 @@
-public class ClackServer {
+package main;
+
+public classC lackServer {
     int port;
     boolean closeConnection;
     ClackData dataToReceiveFromClient;
@@ -44,7 +46,7 @@ public class ClackServer {
 
     @Override
     public String toString(){
-        return "ClackServer object with port " + this.port + " and activity " + this.closeConnection + " and data " + this.dataToReceiveFromClient + this.DataToSendToClient;
+        return "main.ClackServer object with port " + this.port + " and activity " + this.closeConnection + " and data " + this.dataToReceiveFromClient + this.DataToSendToClient;
     }
 
 }

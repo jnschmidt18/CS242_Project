@@ -1,3 +1,7 @@
+package data;
+
+import data.ClackData;
+
 public class FileClackData extends ClackData {
 
     String fileName;

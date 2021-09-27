@@ -1,5 +1,6 @@
+package data;
 
-public class MessageClackData extends ClackData{
+public class MessageClackData extends ClackData {
 
     int CONSTANT_SENDMESSAGE = 2;
     String Message;
