@@ -29,6 +29,10 @@ public class FileClackData extends ClackData {
         return this.fileContents;
     }
 
+    public String getData(String key){
+        return decrypt(this.fileContents, key);
+    }
+
     //public readFileContents{
     //
     //}

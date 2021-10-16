@@ -15,9 +15,19 @@ public class MessageClackData extends ClackData {
         new MessageClackData("Anon", "NULL", CONSTANT_SENDMESSAGE);
     }
 
+    public MessageClackData( String userName, String message, String key, int type ){
+        super(userName, type);
+        this.Message = encrypt(message, key);
+    }
+
     @Override
     public String getData() {
         return this.Message;
+    }
+
+    @Override
+    public String getData(String key){
+        return decrypt(this.Message, key);
     }
 
     @Override
