@@ -18,6 +18,8 @@ public class ClackClient{
         this.userName = userName;
         this.hostName = hostName;
         this.port = port;
+        if(userName==null || hostName==null || port<1024)
+            throw new IllegalArgumentException();
     }
 
     public ClackClient(String userName, String hostName){
