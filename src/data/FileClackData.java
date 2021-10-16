@@ -2,6 +2,8 @@ package data;
 
 import data.ClackData;
 
+import java.io.*;
+
 public class FileClackData extends ClackData {
 
     String fileName;
@@ -33,12 +35,58 @@ public class FileClackData extends ClackData {
         return decrypt(this.fileContents, key);
     }
 
-    //public readFileContents{
-    //
-    //}
+    public void readFileContents() throws IOException {
+        try {
+            BufferedReader reader = new BufferedReader(new FileReader(this.fileName));
+            if(reader.readLine()==null)
+                throw new IOException("File not Found");
+            while (reader.readLine() != null) {
+                this.fileContents += reader.readLine();
+            }
+            reader.close();
+        }
+        catch(Exception misc){
+            System.out.println("Error Reading");
+        }
+    }
 
-    //public writeFileContents(){
-     //
-    //}
+    public void readFileContents(String key) throws IOException {
+        try {
+            BufferedReader reader = new BufferedReader(new FileReader(this.fileName));
+            if(reader.readLine()==null)
+                throw new IOException("File not Found");
+            while (reader.readLine() != null) {
+                this.fileContents += encrypt(reader.readLine(), key);
+            }
+            reader.close();
+        }
+        catch(Exception misc){
+            System.out.println("Error Reading");
+        }
+    }
+
+    public void writeFileContents(){
+        String output;
+        try {
+            BufferedWriter writer = new BufferedWriter(new FileWriter(this.fileName));
+            writer.write(this.fileContents);
+            writer.close();
+        }
+        catch(Exception misc){
+            System.out.println("Error Writing");
+        }
+    }
+
+    public void writeFileContents(String key){
+        String output;
+        try {
+            BufferedWriter writer = new BufferedWriter(new FileWriter(this.fileName));
+            writer.write(encrypt(this.fileContents, key));
+            writer.close();
+        }
+        catch(Exception misc){
+            System.out.println("Error Writing");
+        }
+    }
 
 }
