@@ -18,7 +18,6 @@ public class ClackClient{
         this.userName = userName;
         this.hostName = hostName;
         this.port = port;
-        // no clue about closeConnection maybe true???
     }
 
     public ClackClient(String userName, String hostName){
