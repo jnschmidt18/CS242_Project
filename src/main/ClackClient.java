@@ -26,8 +26,6 @@ public class ClackClient extends ClackData {
     }
 
     public ClackClient(){
-        //huh?
-
     }
 
     public void start(){
