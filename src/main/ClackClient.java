@@ -1,8 +1,11 @@
 package main;
 
 import data.ClackData;
+import data.FileClackData;
 
-public class ClackClient extends ClackData {
+import java.util.Scanner;
+
+public class ClackClient{
 
     String userName;
     String hostName;
@@ -33,7 +36,17 @@ public class ClackClient extends ClackData {
     }
 
     public void readClientData(){
-
+        Scanner scan = new Scanner(System.in);
+        String input = scan.next();
+        if(input=="DONE")
+                this.closeConnection=true;
+        if(input.substring(0,8)=="SENDFILE"){
+            FileClackData dataToSendToServer  = new FileClackData(this.userName, input.substring(8,input.length()), 3);
+        }
+        if(input == "LISTUSERS"){}
+        else{
+            FileClackData dataToSendToServer  = new FileClackData();
+        }
     }
 
     public void sendData(){

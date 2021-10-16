@@ -6,6 +6,8 @@ import java.io.*;
 
 public class FileClackData extends ClackData {
 
+    int CONSTANT_SENDFILE = 3;
+
     String fileName;
     String fileContents;
 
@@ -15,8 +17,6 @@ public class FileClackData extends ClackData {
         this.fileContents = "NULL";
     }
     public FileClackData() {
-
-
     }
 
     public void setFileName(String fileName) {
@@ -88,5 +88,4 @@ public class FileClackData extends ClackData {
             System.out.println("Error Writing");
         }
     }
-
 }
