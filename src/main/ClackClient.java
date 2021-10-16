@@ -31,12 +31,14 @@ public class ClackClient{
     }
 
     public void start(){
-
+        Scanner inFromStd = new Scanner(System.in);
+        readClientData();
+        printData();
     }
 
     public void readClientData(){
-        Scanner scan = new Scanner(System.in);
-        String input = scan.next();
+        Scanner inFromStd = new Scanner(System.in);
+        String input = inFromStd.next();
         if(input=="DONE")
                 this.closeConnection=true;
         if(input.substring(0,8)=="SENDFILE"){
@@ -57,7 +59,7 @@ public class ClackClient{
     }
 
     public void printData(){
-
+        System.out.println(dataToReceiveFromServer.getData());
     }
 
     public String getUserName(){
