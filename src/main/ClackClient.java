@@ -16,10 +16,6 @@ public class ClackClient extends ClackData {
         this.hostName = hostName;
         this.port = port;
         // no clue about closeConnection maybe true???
-        dataToSendToServer();
-        dataToReceiveFromServer();
-
-
     }
 
     public ClackClient(String userName, String hostName){
