@@ -57,7 +57,7 @@ public class ClackClient{
         if(input.substring(0,8)=="SENDFILE"){
             FileClackData dataToSendToServer  = new FileClackData(this.userName, input.substring(8,input.length()), 3);
         }
-        if(input == "LISTUSERS"){}
+        if(input.equals("LISTUSERS")){}
         else{
             FileClackData dataToSendToServer  = new FileClackData();
         }
