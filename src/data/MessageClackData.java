@@ -2,22 +2,21 @@ package data;
 
 public class MessageClackData extends ClackData {
 
-    int CONSTANT_SENDMESSAGE = 2;
-    String Message;
+    private String Message;
 
     public MessageClackData(String userName, String Message, int type) {
         super(userName, type);
         this.Message = Message;
     }
 
-    public MessageClackData(){
-        super();
-        new MessageClackData("Anon", "NULL", CONSTANT_SENDMESSAGE);
-    }
-
     public MessageClackData( String userName, String message, String key, int type ){
         super(userName, type);
         this.Message = encrypt(message, key);
+    }
+
+    public MessageClackData(){
+        super("Anon", CONSTANT_SENDMESSAGE);
+        this.Message = null;
     }
 
     @Override
@@ -32,24 +31,32 @@ public class MessageClackData extends ClackData {
 
     @Override
     public int hashCode(){
-        return 0x40;
+        final int prime = 31;
+        int hashcode = 7;
+        hashcode = prime*hashcode + this.getType();
+        hashcode = prime*hashcode + this.getUserName().length();
+        if(this.getData() != null)
+            hashcode = prime*hashcode + this.getData().length();
+        return hashcode;
     }
 
     @Override
     public boolean equals(Object obj){
-        MessageClackData other = (MessageClackData) obj;
-        if(this.Message == other.Message){
-            if(this.userName == other.userName){
-                if(this.type == other.type){
-                    return true;
-                }
-            }
-        }
-        return false;
+        if (!(obj instanceof MessageClackData))
+            return false;
+
+        MessageClackData temp = (MessageClackData)obj;
+
+        return this.getUserName().equals(temp.getUserName()) &&
+                this.getType() == temp.getType() &&
+                this.getData().equals(temp.getData());
     }
 
     @Override
-    public String toString(){
-        return ("Message with user " + super.userName + " and contents " + this.Message + " and type " + super.type);
+    public String toString() {
+        return "The userName for this ClackData is:      " + this.getUserName() + '\n' +
+                "The Data Type for this ClackData is:     " + this.getType() + '\n' +
+                "This ClackData was created at:           " + this.getDate() + '\n' +
+                "The data for this ClackData is:          " + this.getData() + '\n';
     }
 }

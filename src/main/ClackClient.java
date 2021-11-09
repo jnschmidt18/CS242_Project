@@ -15,27 +15,29 @@ public class ClackClient{
     ClackData dataToReceiveFromServer;
 
     public ClackClient(String userName, String hostName, int port){
+        if(userName==null || hostName==null || port<1024)
+            throw new IllegalArgumentException();
         this.userName = userName;
         this.hostName = hostName;
         this.port = port;
-        if(userName==null || hostName==null || port<1024)
-            throw new IllegalArgumentException();
     }
 
     public ClackClient(String userName, String hostName){
+        if(userName==null || hostName==null)
+            throw new IllegalArgumentException();
         this.port = 7000;
         this.userName = userName;
         this.hostName = hostName;
-        if(userName==null || hostName==null || port<1024)
-            throw new IllegalArgumentException();
+
     }
 
     public ClackClient(String userName){
+        if(userName==null)
+            throw new IllegalArgumentException();
         this.port = 7000;
         this.userName = userName;
         this.hostName = "host";
-        if(userName==null || hostName==null || port<1024)
-            throw new IllegalArgumentException();
+
     }
 
     public ClackClient(){
@@ -55,7 +57,7 @@ public class ClackClient{
         if(input.substring(0,8)=="SENDFILE"){
             FileClackData dataToSendToServer  = new FileClackData(this.userName, input.substring(8,input.length()), 3);
         }
-        if(input == "LISTUSERS"){}
+        if(input.equals("LISTUSERS")){}
         else{
             FileClackData dataToSendToServer  = new FileClackData();
         }
