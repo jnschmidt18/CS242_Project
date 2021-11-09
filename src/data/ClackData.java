@@ -1,8 +1,9 @@
 package data;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public abstract class ClackData {
+public abstract class ClackData implements Serializable {
 
     public final static int CONSTANT_LISTUSERS = 0;
     public final static int CONSTANT_LOGOUT = 1;
@@ -43,30 +44,56 @@ public abstract class ClackData {
 
     public abstract String getData( String key );
 
-    protected String encrypt(String text, String key) {
-        int counter = 0;
-        while (key.length() != text.length()) {
-            key += key.charAt(counter);
-            counter++;
-        }
+    protected static String encrypt(String toEncrypt, String key) {
         String encrypted = "";
-        for (int i = 0; i < text.length(); i++) {
-            int charVal = ((text.charAt(i) + key.charAt(i)) % 26) + 65;
-            encrypted += (char) (charVal);
+        int temp = 0;
+        int emptySpace = 0;
+        boolean isCapital = false;
+        for(int i = 0; i < toEncrypt.length(); i++) {
+            if((toEncrypt.charAt(i) >= 65 && toEncrypt.charAt(i) <= 90) ||
+                    (toEncrypt.charAt(i) >= 97 && toEncrypt.charAt(i) <= 122)) {
+                if(toEncrypt.charAt(i) >= 65 && toEncrypt.charAt(i) <= 90)
+                    isCapital = true;
+                temp = toEncrypt.toLowerCase().charAt(i) - 97;
+                temp = ((temp + (key.toLowerCase().charAt((i-emptySpace) % key.length())) - 97) % 26);
+                temp += 97;
+                if(isCapital)
+                    temp -= 32;
+            }
+            else {
+                temp = toEncrypt.charAt(i);
+                emptySpace++;
+            }
+            encrypted += (char)temp;
+            temp = 0;
+            isCapital = false;
         }
         return encrypted;
     }
 
-    protected String decrypt(String text, String key) {
-        int counter = 0;
-        while (key.length() != text.length()) {
-            key += key.charAt(counter);
-            counter++;
-        }
+    protected static String decrypt(String toDecrypt, String key) {
         String decrypted = "";
-        for (int i = 0; i < text.length(); i++) {
-            int charVal = ((text.charAt(i) - key.charAt(i) + 26) % 26) + 65;
-            decrypted += (char) (charVal);
+        int temp = 0;
+        int emptySpace = 0;
+        boolean isCapital = false;
+        for(int i = 0; i < toDecrypt.length(); i++) {
+            if((toDecrypt.charAt(i) >= 65 && toDecrypt.charAt(i) <= 90) ||
+                    (toDecrypt.charAt(i) >= 97 && toDecrypt.charAt(i) <= 122)) {
+                if(toDecrypt.charAt(i) >= 65 && toDecrypt.charAt(i) <= 90)
+                    isCapital = true;
+                temp = toDecrypt.toLowerCase().charAt(i) - 97;
+                temp = ((temp - (key.toLowerCase().charAt((i-emptySpace) % key.length())) + 97 + 26) % 26);
+                temp += 97;
+                if(isCapital)
+                    temp -= 32;
+            }
+            else {
+                temp = toDecrypt.charAt(i);
+                emptySpace++;
+            }
+            decrypted += (char)temp;
+            temp = 0;
+            isCapital = false;
         }
         return decrypted;
     }

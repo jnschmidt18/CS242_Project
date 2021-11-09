@@ -2,22 +2,21 @@ package data;
 
 public class MessageClackData extends ClackData {
 
-    int CONSTANT_SENDMESSAGE = 2;
-    String Message;
+    private String Message;
 
     public MessageClackData(String userName, String Message, int type) {
         super(userName, type);
         this.Message = Message;
     }
 
-    public MessageClackData(){
-        super();
-        new MessageClackData("Anon", "NULL", CONSTANT_SENDMESSAGE);
-    }
-
     public MessageClackData( String userName, String message, String key, int type ){
         super(userName, type);
         this.Message = encrypt(message, key);
+    }
+
+    public MessageClackData(){
+        super("Anon", CONSTANT_SENDMESSAGE);
+        this.Message = null;
     }
 
     @Override
@@ -32,7 +31,13 @@ public class MessageClackData extends ClackData {
 
     @Override
     public int hashCode(){
-        return 0x40;
+        final int prime = 31;
+        int hashcode = 7;
+        hashcode = prime*hashcode + this.getType();
+        hashcode = prime*hashcode + this.getUserName().length();
+        if(this.getData() != null)
+            hashcode = prime*hashcode + this.getData().length();
+        return hashcode;
     }
 
     @Override
