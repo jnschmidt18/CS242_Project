@@ -4,24 +4,27 @@ import java.util.Date;
 
 public abstract class ClackData {
 
-    int CONSTANT_SENDMESSAGE = 2;
+    public final static int CONSTANT_LISTUSERS = 0;
+    public final static int CONSTANT_LOGOUT = 1;
+    public final static int CONSTANT_SENDMESSAGE = 2;
+    public final static int CONSTANT_SENDFILE = 3;
 
-    String userName;
-    int type;
-    Date date;
+    private String userName;
+    private int type;
+    private Date date;
 
     public ClackData(String userName, int type) {
         this.userName = userName;
         this.type = type;
+        date = new Date();
     }
 
     public ClackData(int type) {
-        this.userName = "Anon";
-        this.type = type;
+        this("Anon", type);
     }
 
     public ClackData() {
-
+        this("Anon", CONSTANT_LISTUSERS);
     }
 
     public int getType() {

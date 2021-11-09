@@ -37,19 +37,21 @@ public class MessageClackData extends ClackData {
 
     @Override
     public boolean equals(Object obj){
-        MessageClackData other = (MessageClackData) obj;
-        if(this.Message == other.Message){
-            if(this.userName == other.userName){
-                if(this.type == other.type){
-                    return true;
-                }
-            }
-        }
-        return false;
+        if (!(obj instanceof MessageClackData))
+            return false;
+
+        MessageClackData temp = (MessageClackData)obj;
+
+        return this.getUserName().equals(temp.getUserName()) &&
+                this.getType() == temp.getType() &&
+                this.getData().equals(temp.getData());
     }
 
     @Override
-    public String toString(){
-        return ("Message with user " + super.userName + " and contents " + this.Message + " and type " + super.type);
+    public String toString() {
+        return "The userName for this ClackData is:      " + this.getUserName() + '\n' +
+                "The Data Type for this ClackData is:     " + this.getType() + '\n' +
+                "This ClackData was created at:           " + this.getDate() + '\n' +
+                "The data for this ClackData is:          " + this.getData() + '\n';
     }
 }
