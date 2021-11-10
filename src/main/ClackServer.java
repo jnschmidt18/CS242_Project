@@ -37,25 +37,20 @@ public class ClackServer {
         ServerSocket sskt = null;
         try {
             sskt = new ServerSocket(this.getPort());
+            this.closedConnection = false;
+        while(!this.closedConnection) {
             Socket client = sskt.accept();
             outToClient = new ObjectOutputStream( client.getOutputStream() );
             inFromClient = new ObjectInputStream( client.getInputStream() );
-
-            this.closedConnection = false;
-
+            receiveData();
+            dataToSendToClient = dataToReceiveFromClient;
+            sendData();
+        }
         } catch(UnknownHostException uhe) {
             System.err.println( uhe.getMessage() );
         } catch (IOException ioe) {
             System.err.println( ioe.getMessage() );
         }
-        while(!this.closedConnection) {
-            this.sendData();
-            this.receiveData();
-
-        }
-
-
-
         try {
             sskt.close();
             inFromClient.close();
@@ -67,7 +62,9 @@ public class ClackServer {
 
     public void receiveData(){
         try {
-            dataToReceiveFromClient = (ClackData)inFromClient.readObject();
+            if(!closedConnection)
+                dataToReceiveFromClient = (ClackData)inFromClient.readObject();
+            System.out.println(dataToReceiveFromClient);
         } catch (IOException ioe) {
             System.err.println(ioe.getMessage());
         } catch (ClassNotFoundException cnfe) {

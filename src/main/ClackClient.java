@@ -80,15 +80,12 @@ public class ClackClient{
             System.err.println( ioe.getMessage() );
         }
         while(!this.closedConnection) {
-            this.readClientData();
-            this.sendData();
-            this.receiveData();
-
-            printData();
+            readClientData();
+            sendData();
+            receiveData();
+            if(dataToReceiveFromServer != null)
+                printData();
         }
-
-
-
         try {
             skt.close();
             inFromStd.close();
@@ -120,7 +117,7 @@ public class ClackClient{
                 break;
             default:
                 cmd += inFromStd.nextLine();
-                this.dataToSendToServer = new MessageClackData(this.getUserName(), cmd, CONSTANT_KEY, CONSTANT_SENDMESSAGE);
+                this.dataToSendToServer = new MessageClackData(this.getUserName(), cmd, CONSTANT_SENDMESSAGE);
                 break;
         }
     }
