@@ -11,7 +11,7 @@ public class FileClackData extends ClackData {
     public FileClackData(String userName, String fileName, int type) {
         super(userName, type);
         this.fileName = fileName;
-        this.fileContents = "NULL";
+        this.fileContents = null;
     }
     public FileClackData() {
         super(CONSTANT_SENDFILE);
@@ -55,7 +55,7 @@ public class FileClackData extends ClackData {
             Scanner sc = new Scanner( new File(fileName) );
             fileContents = "";
             while (sc.hasNext()) {
-                fileContents += encrypt((sc.next()), key) + " ";
+                fileContents += sc.next();
             }
             sc.close();
         }
