@@ -64,6 +64,8 @@ public class ClackServer {
         try {
             if(!closedConnection)
                 dataToReceiveFromClient = (ClackData)inFromClient.readObject();
+            if(dataToReceiveFromClient.getType() == 1)
+                closedConnection = true;
             System.out.println(dataToReceiveFromClient);
         } catch (IOException ioe) {
             System.err.println(ioe.getMessage());

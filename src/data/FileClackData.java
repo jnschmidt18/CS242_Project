@@ -12,6 +12,7 @@ public class FileClackData extends ClackData {
         super(userName, type);
         this.fileName = fileName;
         this.fileContents = "NULL";
+
     }
     public FileClackData() {
         super(CONSTANT_SENDFILE);

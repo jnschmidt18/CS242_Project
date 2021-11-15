@@ -104,7 +104,7 @@ public class ClackClient{
                 break;
             case "SEND_FILE":
                 String Fname = inFromStd.next();
-                this.dataToSendToServer = new FileClackData(this.getUserName(), Fname, CONSTANT_SENDFILE);
+                dataToSendToServer = new FileClackData(this.getUserName(), Fname, CONSTANT_SENDFILE);
                 try {
                     Scanner testScanner = new Scanner( new File (Fname) );
                     testScanner.close();
