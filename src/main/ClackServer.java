@@ -1,54 +1,135 @@
 package main;
 
-import data.ClackData;
+import data.*;
+import java.io.*;
+import java.net.*;
 
 public class ClackServer {
+
     int port;
-    boolean closeConnection;
+    boolean closedConnection;
+
     ClackData dataToReceiveFromClient;
-    ClackData DataToSendToClient;
+    ClackData dataToSendToClient;
+
+    ObjectInputStream inFromClient;
+    ObjectOutputStream outToClient;
 
     public ClackServer(int port) {
-        this.port = port;
+        try {
+            if(port < 1024) {
+                throw new IllegalArgumentException("Not a valid port");
+            }
+            this.port = port;
+            this.outToClient = null;
+            this.inFromClient = null;
+            this.closedConnection = true;
+        } catch (IllegalArgumentException iae) {
+            System.err.println( iae.getMessage() );
+        }
     }
 
     public ClackServer() {
         this.port = 7000;
     }
 
-    public void start(){}
+    public void start(){
+        ServerSocket sskt = null;
+        try {
+            sskt = new ServerSocket(this.getPort());
+            this.closedConnection = false;
+        while(!this.closedConnection) {
+            Socket client = sskt.accept();
+            outToClient = new ObjectOutputStream( client.getOutputStream() );
+            inFromClient = new ObjectInputStream( client.getInputStream() );
+            receiveData();
+            dataToSendToClient = dataToReceiveFromClient;
+            sendData();
+        }
+        } catch(UnknownHostException uhe) {
+            System.err.println( uhe.getMessage() );
+        } catch (IOException ioe) {
+            System.err.println( ioe.getMessage() );
+        }
+        try {
+            sskt.close();
+            inFromClient.close();
+            outToClient.close();
+        } catch (IOException ioe) {
+            System.err.println( ioe.getMessage() );
+        }
+    }
 
-    public void receiveData(){}
+    public void receiveData(){
+        try {
+            if(!closedConnection)
+                dataToReceiveFromClient = (ClackData)inFromClient.readObject();
+            System.out.println(dataToReceiveFromClient);
+        } catch (IOException ioe) {
+            System.err.println(ioe.getMessage());
+        } catch (ClassNotFoundException cnfe) {
+            System.err.println(cnfe.getMessage());
+        }
+    }
 
-    public void sendData(){}
+    public void sendData(){
+        try {
+            outToClient.writeObject(dataToSendToClient);
+        } catch (IOException ioe) {
+            System.err.println(ioe.getMessage());
+        }
+    }
 
     public int getPort(){
         return this.port;
     }
 
     @Override
-    public int hashCode(){
-        return 0x41;
+    public int hashCode() {
+        final int prime = 31;
+        int hashcode = 7;
+        hashcode = prime*hashcode + this.getPort();
+        if(this.closedConnection)
+            hashcode = prime*hashcode*-1;
+        if(dataToSendToClient != null)
+            hashcode = prime*hashcode + dataToSendToClient.hashCode();
+        if(dataToReceiveFromClient != null)
+            hashcode = prime*hashcode + dataToReceiveFromClient.hashCode();
+        return hashcode;
     }
 
     @Override
-    public boolean equals(Object obj){
-        ClackServer other = (ClackServer) obj;
-        if(other.port==this.port){
-            if(other.closeConnection==this.closeConnection){
-                if(other.dataToReceiveFromClient==this.dataToReceiveFromClient){
-                    if(other.DataToSendToClient==this.DataToSendToClient){
-                        return true;
-                    }
-                }
-            }
+    public boolean equals(Object obj) {
+        if (!(obj instanceof ClackServer))
+            return false;
+
+        ClackServer temp = (ClackServer)obj;
+
+        return this.getPort() == temp.getPort() &&
+                this.closedConnection == temp.closedConnection ||
+                ((this.dataToSendToClient != null || temp.dataToSendToClient != null) &&
+                        (!this.dataToSendToClient.equals(temp.dataToSendToClient))) ||
+                ((this.dataToReceiveFromClient != null || temp.dataToReceiveFromClient != null) &&
+                        (!this.dataToReceiveFromClient.equals(temp.dataToReceiveFromClient)));
+    }
+
+    @Override
+    public String toString() {
+        return "The port for this ClackClient is: " + this.getPort() + '\n' +
+                "The data sent out is:\n\n" + dataToSendToClient + "\n\n" +
+                "The data received is:\n\n" + dataToReceiveFromClient + "\n\n" +
+                "The connection is closed: " + closedConnection + '\n';
+    }
+
+    public static void main(String[] args) {
+        ClackServer s;
+        if (args.length == 0) {
+            s = new ClackServer();
+        } else {
+            s = new ClackServer(Integer.parseInt(args[0]));
+
         }
-        return false;
-    }
-
-    @Override
-    public String toString(){
-        return "main.ClackServer object with port " + this.port + " and activity " + this.closeConnection + " and data " + this.dataToReceiveFromClient + this.DataToSendToClient;
+        s.start();
     }
 
 }

@@ -1,13 +1,25 @@
 package test;
 
+import main.ClackServer;
+
 public class testClackServer {
 
     public static void main(String[] args) {
-        int port=6000;
-        testClackServer test = new testClackServer();
-        testClackServer test2 = new testClackServer();
+        ClackServer server1 = new ClackServer(1111);
+        ClackServer server2 = new ClackServer();
 
-        System.out.println(test.toString());
-        System.out.println(test==test2);
+        System.out.println(server1);
+        System.out.println(server2);
+
+        System.out.println();
+
+        System.out.println(server1.hashCode());
+        System.out.println(server2.hashCode());
+
+        System.out.println();
+
+        System.out.println(!(server1.equals(server2)));
+        System.out.println(server2.equals(server2));
+
     }
 }

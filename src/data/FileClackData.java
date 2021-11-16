@@ -11,7 +11,7 @@ public class FileClackData extends ClackData {
     public FileClackData(String userName, String fileName, int type) {
         super(userName, type);
         this.fileName = fileName;
-        this.fileContents = "NULL";
+        this.fileContents = null;
     }
     public FileClackData() {
         super(CONSTANT_SENDFILE);
@@ -49,16 +49,11 @@ public class FileClackData extends ClackData {
         }
     }
 
-    //TODO: the encryption isn't quite right here.
     public void readFileContents(String key) throws IOException {
         try {
-            Scanner sc = new Scanner( new File(fileName) );
-            fileContents = "";
-            while (sc.hasNext()) {
-                fileContents += encrypt((sc.next()), key) + " ";
+            readFileContents();
+            fileContents = encrypt(fileContents, key);
             }
-            sc.close();
-        }
         catch(FileNotFoundException fnfe){
             System.err.println(fnfe.getMessage());
         }
