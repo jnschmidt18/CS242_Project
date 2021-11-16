@@ -50,15 +50,11 @@ public class FileClackData extends ClackData {
         }
     }
 
-    //TODO: the encryption isn't quite right here.
+
     public void readFileContents(String key) throws IOException {
         try {
-            Scanner sc = new Scanner( new File(fileName) );
-            fileContents = "";
-            while (sc.hasNext()) {
-                fileContents += encrypt((sc.next()), key) + " ";
-            }
-            sc.close();
+            readFileContents();
+            fileContents =  encrypt(fileContents, key);
         }
         catch(FileNotFoundException fnfe){
             System.err.println(fnfe.getMessage());
