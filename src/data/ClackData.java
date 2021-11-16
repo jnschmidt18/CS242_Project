@@ -44,7 +44,7 @@ public abstract class ClackData implements Serializable {
 
     public abstract String getData( String key );
 
-    public static String encrypt(String toEncrypt, String key) {
+    protected static String encrypt(String toEncrypt, String key) {
         String encrypted = "";
         int temp = 0;
         int emptySpace = 0;
@@ -71,7 +71,7 @@ public abstract class ClackData implements Serializable {
         return encrypted;
     }
 
-    public static String decrypt(String toDecrypt, String key) {
+    protected static String decrypt(String toDecrypt, String key) {
         String decrypted = "";
         int temp = 0;
         int emptySpace = 0;
