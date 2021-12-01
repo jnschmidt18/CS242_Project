@@ -3,17 +3,14 @@ package main;
 import data.*;
 import java.io.*;
 import java.net.*;
+import java.util.ArrayList;
+
 
 public class ClackServer {
 
-    int port;
-    boolean closedConnection;
-
-    ClackData dataToReceiveFromClient;
-    ClackData dataToSendToClient;
-
-    ObjectInputStream inFromClient;
-    ObjectOutputStream outToClient;
+    private int port;
+    private boolean closedConnection;
+    private ArrayList<ServerSideClientIO> serverSideClientIOList;
 
     public ClackServer(int port) {
         try {
@@ -21,66 +18,54 @@ public class ClackServer {
                 throw new IllegalArgumentException("Not a valid port");
             }
             this.port = port;
-            this.outToClient = null;
-            this.inFromClient = null;
             this.closedConnection = true;
+            this.serverSideClientIOList = new ArrayList<ServerSideClientIO>();
         } catch (IllegalArgumentException iae) {
             System.err.println( iae.getMessage() );
         }
     }
 
     public ClackServer() {
-        this.port = 7000;
+        this(7000);
     }
 
-    public void start(){
-        ServerSocket sskt = null;
+    public void start() {
         try {
-            sskt = new ServerSocket(this.getPort());
+            ServerSocket sskt = null;
             this.closedConnection = false;
-        while(!this.closedConnection) {
-            Socket client = sskt.accept();
-            outToClient = new ObjectOutputStream( client.getOutputStream() );
-            inFromClient = new ObjectInputStream( client.getInputStream() );
-            receiveData();
-            dataToSendToClient = dataToReceiveFromClient;
-            sendData();
-        }
-        } catch(UnknownHostException uhe) {
-            System.err.println( uhe.getMessage() );
-        } catch (IOException ioe) {
-            System.err.println( ioe.getMessage() );
-        }
-        try {
+            while (!this.closedConnection) {
+                Socket skt = sskt.accept();
+                ServerSideClientIO temp = new ServerSideClientIO(this, skt);
+                serverSideClientIOList.add(temp);
+
+                Thread tr = new Thread(temp);
+                tr.start();
+            }
             sskt.close();
-            inFromClient.close();
-            outToClient.close();
+        } catch (UnknownHostException unh) {
+            System.err.println(unh.getMessage());
         } catch (IOException ioe) {
-            System.err.println( ioe.getMessage() );
+            System.err.println(ioe.getMessage());
+
         }
     }
 
-    public void receiveData(){
-        try {
-            if(!closedConnection)
-                dataToReceiveFromClient = (ClackData)inFromClient.readObject();
-            if(dataToReceiveFromClient.getType() == 1)
-                closedConnection = true;
-            System.out.println(dataToReceiveFromClient);
-        } catch (IOException ioe) {
-            System.err.println(ioe.getMessage());
-        } catch (ClassNotFoundException cnfe) {
-            System.err.println(cnfe.getMessage());
+
+    public synchronized void broadcast(ClackData dataToBroadcastToClients){
+        for(ServerSideClientIO ssc : serverSideClientIOList){
+            ssc.setDataToSendToClient(dataToBroadcastToClients);
+            ssc.sendData();
         }
     }
 
-    public void sendData(){
-        try {
-            outToClient.writeObject(dataToSendToClient);
-        } catch (IOException ioe) {
-            System.err.println(ioe.getMessage());
-        }
+    public synchronized void remove( ServerSideClientIO serverSideClientToRemove ){
+        serverSideClientIOList.remove(serverSideClientToRemove);
     }
+
+
+
+
+
 
     public int getPort(){
         return this.port;
@@ -93,10 +78,6 @@ public class ClackServer {
         hashcode = prime*hashcode + this.getPort();
         if(this.closedConnection)
             hashcode = prime*hashcode*-1;
-        if(dataToSendToClient != null)
-            hashcode = prime*hashcode + dataToSendToClient.hashCode();
-        if(dataToReceiveFromClient != null)
-            hashcode = prime*hashcode + dataToReceiveFromClient.hashCode();
         return hashcode;
     }
 
@@ -108,18 +89,13 @@ public class ClackServer {
         ClackServer temp = (ClackServer)obj;
 
         return this.getPort() == temp.getPort() &&
-                this.closedConnection == temp.closedConnection ||
-                ((this.dataToSendToClient != null || temp.dataToSendToClient != null) &&
-                        (!this.dataToSendToClient.equals(temp.dataToSendToClient))) ||
-                ((this.dataToReceiveFromClient != null || temp.dataToReceiveFromClient != null) &&
-                        (!this.dataToReceiveFromClient.equals(temp.dataToReceiveFromClient)));
+                this.closedConnection == temp.closedConnection;
+
     }
 
     @Override
     public String toString() {
         return "The port for this ClackClient is: " + this.getPort() + '\n' +
-                "The data sent out is:\n\n" + dataToSendToClient + "\n\n" +
-                "The data received is:\n\n" + dataToReceiveFromClient + "\n\n" +
                 "The connection is closed: " + closedConnection + '\n';
     }
 
