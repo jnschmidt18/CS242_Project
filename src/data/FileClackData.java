@@ -11,7 +11,7 @@ public class FileClackData extends ClackData {
     public FileClackData(String userName, String fileName, int type) {
         super(userName, type);
         this.fileName = fileName;
-        this.fileContents = null;
+        this.fileContents = "NULL";
     }
     public FileClackData() {
         super(CONSTANT_SENDFILE);
@@ -52,8 +52,8 @@ public class FileClackData extends ClackData {
     public void readFileContents(String key) throws IOException {
         try {
             readFileContents();
-            fileContents = encrypt(fileContents, key);
-            }
+            fileContents =  encrypt(fileContents, key);
+        }
         catch(FileNotFoundException fnfe){
             System.err.println(fnfe.getMessage());
         }
