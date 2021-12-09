@@ -133,6 +133,7 @@ public class ClackClient{
     public void receiveData(){
         try {
             dataToReceiveFromServer = (ClackData)inFromServer.readObject();
+            System.out.println(dataToReceiveFromServer);
         } catch (IOException ioe) {
             System.err.println(ioe.getMessage());
         } catch (ClassNotFoundException cnfe) {

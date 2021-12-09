@@ -31,7 +31,7 @@ public class ClackServer {
 
     public void start() {
         try {
-            ServerSocket sskt = null;
+            ServerSocket sskt = new ServerSocket(this.getPort());
             this.closedConnection = false;
             while (!this.closedConnection) {
                 Socket skt = sskt.accept();
