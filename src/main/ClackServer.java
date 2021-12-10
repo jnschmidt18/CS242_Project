@@ -11,6 +11,7 @@ public class ClackServer {
     private int port;
     private boolean closedConnection;
     private ArrayList<ServerSideClientIO> serverSideClientIOList;
+    private ArrayList<ClackClient> listUsers;
 
     public ClackServer(int port) {
         try {
@@ -20,6 +21,7 @@ public class ClackServer {
             this.port = port;
             this.closedConnection = true;
             this.serverSideClientIOList = new ArrayList<ServerSideClientIO>();
+            this.listUsers = new ArrayList<ClackClient>();
         } catch (IllegalArgumentException iae) {
             System.err.println( iae.getMessage() );
         }
@@ -62,13 +64,12 @@ public class ClackServer {
         serverSideClientIOList.remove(serverSideClientToRemove);
     }
 
-
-
-
-
-
     public int getPort(){
         return this.port;
+    }
+
+    public ArrayList<ClackClient> getListUsers() {
+        return listUsers;
     }
 
     @Override

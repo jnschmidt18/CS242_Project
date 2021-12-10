@@ -1,6 +1,7 @@
 package main;
 
 import data.ClackData;
+import data.MessageClackData;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -58,6 +59,9 @@ public class ServerSideClientIO implements Runnable{
                 closedConnection = true;
                 server.remove(this);
             }
+            else if(dataToReceiveFromClient.getType() == 0){
+                dataToSendToClient = new MessageClackData("host",this.ListUsers(),ClackData.CONSTANT_SENDMESSAGE );
+            }
             System.out.println(dataToReceiveFromClient);
         } catch (IOException ioe) {
             System.err.println(ioe.getMessage());
@@ -76,6 +80,14 @@ public class ServerSideClientIO implements Runnable{
 
     public synchronized void setDataToSendToClient(ClackData dataToSendToClient){
         this.dataToSendToClient = dataToSendToClient;
+    }
+
+    public String ListUsers(){
+        String list = "";
+        for(int i = 0; i < server.getListUsers().size(); i++){
+            list += server.getListUsers().get(i).toString();
+        }
+        return list;
     }
 
 }

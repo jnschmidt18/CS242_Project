@@ -76,7 +76,7 @@ public class ClackClient{
                 break;
             case "SEND_FILE":
                 String Fname = inFromStd.next();
-                dataToSendToServer = new FileClackData(this.getUserName(), Fname, CONSTANT_SENDFILE);
+                this.dataToSendToServer = new FileClackData(this.getUserName(), Fname, CONSTANT_SENDFILE);
                 try {
                     Scanner testScanner = new Scanner( new File (Fname) );
                     testScanner.close();
@@ -86,6 +86,7 @@ public class ClackClient{
                 }
                 break;
             case "LISTUSERS":
+                this.dataToSendToServer = new MessageClackData(this.getUserName(), "", CONSTANT_LISTUSERS);
                 break;
             default:
                 cmd += inFromStd.nextLine();
