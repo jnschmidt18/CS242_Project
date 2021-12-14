@@ -27,8 +27,8 @@ public class ClientSideServerListener implements Runnable{
             this.client.inFromServer = new ObjectInputStream( skt.getInputStream() );
             this.inFromStd = new Scanner( new InputStreamReader( System.in ) );
 
-            //this.client.dataToSendToServer = new ClientClackData(this);
-            //this.client.sendData();
+            this.client.dataToSendToServer = new ClientClackData(this.client);
+            this.client.sendData();
 
             this.client.closedConnection = false;
 
