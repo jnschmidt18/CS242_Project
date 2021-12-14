@@ -1,5 +1,7 @@
 package data;
 
+import main.ClackClient;
+
 import java.io.Serializable;
 import java.util.Date;
 
@@ -41,6 +43,8 @@ public abstract class ClackData implements Serializable {
     }
 
     public abstract String getData();
+
+    public abstract ClackClient getClientData();
 
     public abstract String getData( String key );
 

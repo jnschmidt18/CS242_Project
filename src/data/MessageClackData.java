@@ -1,5 +1,7 @@
 package data;
 
+import main.ClackClient;
+
 public class MessageClackData extends ClackData {
 
     private String Message;
@@ -22,6 +24,11 @@ public class MessageClackData extends ClackData {
     @Override
     public String getData() {
         return this.Message;
+    }
+
+    @Override
+    public ClackClient getClientData() {
+        return null;
     }
 
     @Override
