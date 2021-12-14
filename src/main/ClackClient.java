@@ -64,7 +64,7 @@ public class ClackClient{
     }
 
     public void start(){
-        ClientSideServerListener listener = new ClientSideServerListener();
+        ClientSideServerListener listener = new ClientSideServerListener(this);
         listener.run();
     }
 
