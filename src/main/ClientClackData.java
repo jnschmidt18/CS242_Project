@@ -16,6 +16,11 @@ public class ClientClackData  extends ClackData {
     }
 
     @Override
+    public ClackClient getClientData() {
+        return this.client;
+    }
+
+    @Override
     public String getData(String key) {
         return null;
     }
