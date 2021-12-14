@@ -4,7 +4,9 @@ import data.*;
 import java.io.*;
 import java.net.*;
 import java.util.ArrayList;
-
+/*
+    note to self :: default run settings are changed
+ */
 
 public class ClackServer {
 
