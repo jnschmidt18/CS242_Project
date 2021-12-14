@@ -58,9 +58,10 @@ public class ServerSideClientIO implements Runnable{
             if(dataToReceiveFromClient.getType() == 1){
                 closedConnection = true;
                 server.remove(this);
-            }
-            else if(dataToReceiveFromClient.getType() == 0){
+            } else if(dataToReceiveFromClient.getType() == 0){
                 dataToSendToClient = new MessageClackData("host",this.ListUsers(),ClackData.CONSTANT_SENDMESSAGE );
+            } else if(dataToReceiveFromClient.getType() == -1){
+               //server.getListUsers().add(dataToReceiveFromClient.getData());
             }
             System.out.println(dataToReceiveFromClient);
         } catch (IOException ioe) {
