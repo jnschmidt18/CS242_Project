@@ -13,15 +13,15 @@ public class ClientSideServerListener implements Runnable{
     private ClackClient client;
     private Scanner inFromStd;
 
-    public void ClientSideServerListener(ClackClient client){
+    public ClientSideServerListener(ClackClient client){
         this.client = client;
     }
 
     @Override
     public void run() {
-        Socket skt = null;
+        //Socket skt = null;
         try {
-            skt = new Socket(this.client.getHostName(), this.client.getPort());
+            Socket skt = new Socket(this.client.getHostName(), this.client.getPort());
 
             this.client.outToServer = new ObjectOutputStream( skt.getOutputStream() );
             this.client.inFromServer = new ObjectInputStream( skt.getInputStream() );
@@ -32,11 +32,6 @@ public class ClientSideServerListener implements Runnable{
 
             this.client.closedConnection = false;
 
-        } catch(UnknownHostException uhe) {
-            System.err.println( uhe.getMessage() );
-        } catch (IOException ioe) {
-            System.err.println( ioe.getMessage() );
-        }
         while(!this.client.closedConnection){
             this.client.readClientData();
             this.client.sendData();
@@ -44,11 +39,12 @@ public class ClientSideServerListener implements Runnable{
             if(this.client.dataToReceiveFromServer != null)
                 this.client.printData();
         }
-        try {
             skt.close();
             inFromStd.close();
             this.client.outToServer.close();
             this.client.inFromServer.close();
+        } catch(UnknownHostException uhe) {
+            System.err.println( uhe.getMessage() );
         } catch (IOException ioe) {
             System.err.println( ioe.getMessage() );
         }
