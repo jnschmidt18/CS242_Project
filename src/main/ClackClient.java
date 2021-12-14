@@ -46,6 +46,7 @@ public class ClackClient{
             this.inFromServer = null;
             this.outToServer = null;
             this.port = port;
+            inFromStd = new Scanner(new InputStreamReader(System.in));
         } catch (IllegalArgumentException iae) {
             System.err.println( iae.getMessage() );
         }

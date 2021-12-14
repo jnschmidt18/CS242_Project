@@ -33,11 +33,6 @@ public class FileClackData extends ClackData {
         return this.fileContents;
     }
 
-    @Override
-    public ClackClient getClientData() {
-        return null;
-    }
-
     public String getData(String key){
         return decrypt(this.fileContents, key);
     }

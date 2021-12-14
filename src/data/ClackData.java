@@ -44,8 +44,6 @@ public abstract class ClackData implements Serializable {
 
     public abstract String getData();
 
-    public abstract ClackClient getClientData();
-
     public abstract String getData( String key );
 
     protected static String encrypt(String toEncrypt, String key) {

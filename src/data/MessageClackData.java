@@ -27,11 +27,6 @@ public class MessageClackData extends ClackData {
     }
 
     @Override
-    public ClackClient getClientData() {
-        return null;
-    }
-
-    @Override
     public String getData(String key){
         return decrypt(this.Message, key);
     }
