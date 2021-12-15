@@ -75,7 +75,7 @@ public class ClackServer {
     }
 
     public String returnListUser() {
-        String ls = "";
+        String ls = "Users: ";
         for (int i = 0; i < this.listUsers.size(); i++){
             ls +=  listUsers.get(i);
         }
