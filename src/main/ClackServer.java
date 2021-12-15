@@ -70,8 +70,16 @@ public class ClackServer {
         return this.port;
     }
 
-    public ArrayList<String> getListUsers() {
+    public  ArrayList<String> getListUsers(){
         return listUsers;
+    }
+
+    public String returnListUser() {
+        String ls = "";
+        for (int i = 0; i < this.listUsers.size(); i++){
+            ls +=  listUsers.get(i);
+        }
+        return ls;
     }
 
     @Override

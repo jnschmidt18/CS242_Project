@@ -65,6 +65,7 @@ public class ClackClient{
     }
 
     public void start(){
+        closedConnection = false;
         ClientSideServerListener listener = new ClientSideServerListener(this);
         listener.run();
     }
@@ -73,6 +74,7 @@ public class ClackClient{
         String cmd = inFromStd.next();
         switch (cmd) {
             case "DONE":
+                this.dataToSendToServer = new FileClackData(this.getUserName(), "", 1);
                 this.closedConnection = true;
                 break;
             case "SEND_FILE":

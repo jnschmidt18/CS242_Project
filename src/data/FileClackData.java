@@ -1,6 +1,6 @@
 package data;
 
-import main.ClackClient;
+
 
 import java.io.*;
 import java.util.Scanner;
