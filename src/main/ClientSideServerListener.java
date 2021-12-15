@@ -32,6 +32,7 @@ public class ClientSideServerListener implements Runnable{
 
             this.client.dataToSendToServer = new ClientClackData(this.client.getUserName(), this.client.toString());
             this.client.sendData();
+            this.client.dataToSendToServer = null;
 
             this.client.closedConnection = false;
 

@@ -64,7 +64,7 @@ public class ServerSideClientIO implements Runnable{
                 dataToSendToClient = new MessageClackData("host",this.server.returnListUser(),ClackData.CONSTANT_SENDMESSAGE );
             } else if(dataToReceiveFromClient.getType() == -1){
                server.getListUsers().add(dataToReceiveFromClient.getData());
-               //System.out.println( "\n here" + server.getListUsers());
+               dataToReceiveFromClient = null;
             }
             System.out.println(dataToReceiveFromClient);
         } catch (IOException ioe) {
