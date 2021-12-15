@@ -38,8 +38,11 @@ public class ClientSideServerListener implements Runnable{
 
         while(!this.client.closedConnection){
             this.client.readClientData();
-            this.client.sendData();
+
             this.client.receiveData();
+
+            this.client.sendData();
+
             if(this.client.dataToReceiveFromServer != null)
                 this.client.printData();
         }
