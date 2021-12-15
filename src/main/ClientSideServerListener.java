@@ -1,5 +1,8 @@
 package main;
 
+import com.sun.security.ntlm.Client;
+import data.*;
+
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.ObjectInputStream;
@@ -27,7 +30,7 @@ public class ClientSideServerListener implements Runnable{
             this.client.inFromServer = new ObjectInputStream( skt.getInputStream() );
             this.inFromStd = new Scanner( new InputStreamReader( System.in ) );
 
-            this.client.dataToSendToServer = new ClientClackData(this.client);
+            this.client.dataToSendToServer = new ClientClackData(this.client.getUserName(), this.client.toString());
             this.client.sendData();
 
             this.client.closedConnection = false;

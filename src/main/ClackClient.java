@@ -46,6 +46,7 @@ public class ClackClient{
             this.inFromServer = null;
             this.outToServer = null;
             this.port = port;
+            inFromStd = new Scanner(new InputStreamReader(System.in));
         } catch (IllegalArgumentException iae) {
             System.err.println( iae.getMessage() );
         }
@@ -64,6 +65,7 @@ public class ClackClient{
     }
 
     public void start(){
+        closedConnection = false;
         ClientSideServerListener listener = new ClientSideServerListener(this);
         listener.run();
     }
@@ -72,6 +74,7 @@ public class ClackClient{
         String cmd = inFromStd.next();
         switch (cmd) {
             case "DONE":
+                this.dataToSendToServer = new FileClackData(this.getUserName(), "", 1);
                 this.closedConnection = true;
                 break;
             case "SEND_FILE":

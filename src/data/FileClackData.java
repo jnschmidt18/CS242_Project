@@ -1,6 +1,6 @@
 package data;
 
-import main.ClackClient;
+
 
 import java.io.*;
 import java.util.Scanner;
@@ -31,11 +31,6 @@ public class FileClackData extends ClackData {
 
     public String getData() {
         return this.fileContents;
-    }
-
-    @Override
-    public ClackClient getClientData() {
-        return null;
     }
 
     public String getData(String key){
