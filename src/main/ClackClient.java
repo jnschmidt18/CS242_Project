@@ -92,7 +92,7 @@ public class ClackClient{
                 this.dataToSendToServer = new MessageClackData(this.getUserName(), "", CONSTANT_LISTUSERS);
                 break;
             default:
-                //cmd += inFromStd.nextLine();
+                cmd += inFromStd.nextLine();
                 this.dataToSendToServer = new MessageClackData(this.getUserName(), cmd, CONSTANT_SENDMESSAGE);
                 break;
         }
